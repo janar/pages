@@ -1,0 +1,31 @@
+{
+    "nav": [
+        [
+            "Pages",
+            "admin::pages",
+            "Content Editor"
+        ]
+    ],
+    "ext": [
+        {
+            "path": "pages/categories",
+            "method": "pages::admin.categories",
+            "role": "Content Editor"
+        },
+        {
+            "path": "pages/create",
+            "method": "pages::admin.create",
+            "role": "Content Editor"
+        },
+        {
+            "path": "pages/edit",
+            "method": "pages::admin.edit",
+            "role": "Content Editor"
+        },
+        {
+            "path": "pages",
+            "method": "pages::admin.home",
+            "role": "Content Editor"
+        }
+    ]
+}
