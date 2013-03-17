@@ -4,6 +4,12 @@ Pages for Laravel
 This bundle provides a pages and categories for Laravel 3 with the
 [Admin Framework](https://github.com/CodeBinders/admin-framework).
 
+
+**This  bundle  is still  under  active  development  and is  not  yet
+  suitable  for  production  use   straight  away.  Developers  making
+  improvements  for  this  bundle  please  contribute  to  the  Github
+  repository, if you can. Thanks!**
+
 Features
 --------
 
