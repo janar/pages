@@ -20,12 +20,16 @@ class Page {
                 ->where_slug($input)
                 ->first();
         }
-        if ($page->category === null) {
+        if (isset($page->category) && $page->category === null) {
             return array($page->slug, $page);
         } else {
-            list($slug, $cat) = Category::full_slug($page->category->id);
-            return array($slug . '/' . $page->slug,
-                         $page);
+            if (isset($page->category)) {
+                list($slug, $cat) = Category::full_slug($page->category->id);
+                return array($slug . '/' . $page->slug,
+                             $page);
+            } else {
+                return null;
+            }
         }
     }
 
