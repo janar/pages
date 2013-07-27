@@ -10,8 +10,10 @@ Route::get('(:bundle)/category/(:all)', function ($slug) {
     list($matched, $cat) = Pages\Category::match_slug_by_path($slug);
     // if no match found, give 404
     if ($matched === false) return Response::error('404');
-    $data['pages'] = $cat->pages()->order_by('created_at', 'desc')
-        ->paginate(10);
+    $data['pages'] = $cat->pages()
+                         ->where_published(1)
+                         ->order_by('created_at', 'desc')
+                         ->paginate(10);
     $data['category'] = $cat;
     $data['children'] = $cat->children;
     // Theme
@@ -36,7 +38,9 @@ Route::get('(:bundle)/(:all)', function ($path) {
         list($full_slug, $page) = Pages\Page::full_slug($page_slug);
         if ($full_slug !== $path) return Response::error('404');
     } else {
-        $page = Page::where_slug($page_slug)->first();
+        $page = Page::where_slug($page_slug)
+            ->where_published(1)
+            ->first();
     }
     if ($page === null) return Response::error('404');
     if ($page->category !== null and strlen($cat_path) === 0)
