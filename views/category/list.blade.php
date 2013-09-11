@@ -20,7 +20,7 @@
                                 </a>
                             </h3>
                             <a href="{{ URL::current() . '/' . $child->slug }}" class="btn btn-block btn-small">
-                                <i class="icon-chevron-right"></i> View
+                                View
                             </a>
                         </div>
                     </li>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="span2 offset1">
                         <a class="btn btn-small" href={{ url($full_slug) }}>
-                            <i class="icon-chevron-right"></i> Read More
+                            Read More
                         </a>
                     </div>
                 </div>
