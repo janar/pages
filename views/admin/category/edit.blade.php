@@ -30,6 +30,32 @@ list($full_slug, $cat) = \Pages\Category::full_slug($category->id);
     </div>
 </div>
 
+<div class="control-group {{ $errors->has('order_by_column') ? 'error' : '' }}">
+    {{ Form::label('order_by_column', 'Order by column', array('class' => 'control-label')) }}
+    <div class="controls">
+        <select name="order_by_column">
+            @foreach ( $sort_columns as $key => $val )
+            <option value="{{ $key }}" {{ $category->order_by_column === $key ? 'selected' : '' }}>
+                {{ $val }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="control-group {{ $errors->has('order_by_direction') ? 'error' : '' }}">
+    {{ Form::label('order_by_direction', 'Order by direction', array('class' => 'control-label')) }}
+    <div class="controls">
+        <select name="order_by_direction">
+            @foreach ( $sort_directions as $key => $val )
+            <option value="{{ $key }}" {{ $category->order_by_direction === $key ? 'selected' : '' }}>
+                {{ $val }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
 <div class="control-group">
     {{ Form::label('full-slug', 'Slug', array('class' => 'control-label')) }}
     <div class="controls">

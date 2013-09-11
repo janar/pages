@@ -27,6 +27,15 @@ class Pages_Admin_Categories_Controller extends Pages_Admin_Base_Controller {
     public function get_create()
     {
         $this->data['categories'] = \Pages\Category::to_indented_list_recursive(null);
+        $this->data['sort_columns'] = array(
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'name' => 'Name'
+        );
+        $this->data['sort_directions'] = array(
+            'desc' => 'Descending',
+            'asc' => 'Ascending'
+        );
         return View::make('pages::admin.category.create', $this->data);
     }
 
@@ -38,7 +47,9 @@ class Pages_Admin_Categories_Controller extends Pages_Admin_Base_Controller {
         // Validation rules
         $rules = array(
             'name' => 'required|max:100',
-            );
+            'order_by_column' => 'required|in:name,created_at,updated_at',
+            'order_by_direction' => 'required|in:asc,desc'
+        );
         // Prepare validation
         $validation = Validator::make(Input::all(), $rules);
         // Run validation
@@ -46,10 +57,12 @@ class Pages_Admin_Categories_Controller extends Pages_Admin_Base_Controller {
             return Redirect::to(URL::current())->with_errors($validation)
                 ->with_input();
         } else {
-            // Validation passed. Create page
+            // Validation passed. Create category
             $category = new Category(array(
                                  'name' => Input::get('name'),
                                  'slug' => Str::slug(Input::get('name')),
+                                 'order_by_column' => Input::get('orderby_column'),
+                                 'order_by_direction' => Input::get('order_by_direction'),
                                  'published' => (is_null(Input::get('published')) ? 0 : 1),
                                          ));
             if (strlen(Input::get('parent')) > 0) {
@@ -80,6 +93,15 @@ class Pages_Admin_Categories_Controller extends Pages_Admin_Base_Controller {
         if (is_null($this->data['category'])) {
             return Response::error('404');
         }
+        $this->data['sort_columns'] = array(
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'name' => 'Name'
+        );
+        $this->data['sort_directions'] = array(
+            'desc' => 'Descending',
+            'asc' => 'Ascending'
+        );
         return View::make('pages::admin.category.edit', $this->data);
     }
 
@@ -91,7 +113,9 @@ class Pages_Admin_Categories_Controller extends Pages_Admin_Base_Controller {
         // Validation rules
         $rules = array(
             'name' => 'required|max:100',
-            );
+            'order_by_column' => 'required|in:name,created_at,updated_at',
+            'order_by_direction' => 'required|in:asc,desc'
+        );
         // Prepare validation
         $validation = Validator::make(Input::all(), $rules);
         // Run validation
@@ -113,6 +137,8 @@ class Pages_Admin_Categories_Controller extends Pages_Admin_Base_Controller {
             }
             $category->parent_id = (Input::get('parent') === '') ? null : Input::get('parent');
             $category->published = (is_null(Input::get('published')) ? 0 : 1);
+            $category->order_by_column = Input::get('order_by_column');
+            $category->order_by_direction = Input::get('order_by_direction');
             $update = $category->save();
             // Check if update was successful
             if ($update) {

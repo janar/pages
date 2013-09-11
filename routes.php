@@ -12,7 +12,7 @@ Route::get('(:bundle)/category/(:all)', function ($slug) {
     if ($matched === false) return Response::error('404');
     $data['pages'] = $cat->pages()
                          ->where_published(1)
-                         ->order_by('created_at', 'desc')
+                         ->order_by($cat->order_by_column, $cat->order_by_direction)
                          ->paginate(10);
     $data['category'] = $cat;
     $data['children'] = $cat->children;

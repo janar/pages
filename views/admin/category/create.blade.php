@@ -25,6 +25,32 @@
     </div>
 </div>
 
+<div class="control-group {{ $errors->has('order_by_column') ? 'error' : '' }}">
+    {{ Form::label('order_by_column', 'Order by column', array('class' => 'control-label')) }}
+    <div class="controls">
+        <select name="order_by_column">
+            @foreach ( $sort_columns as $key => $val )
+            <option value="{{ $key }}" {{ (Input::old('order_by_column') == $key) ? 'selected' : '' }}>
+                {{ $val }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="control-group {{ $errors->has('order_by_direction') ? 'error' : '' }}">
+    {{ Form::label('order_by_direction', 'Order by direction', array('class' => 'control-label')) }}
+    <div class="controls">
+        <select name="order_by_direction">
+            @foreach ( $sort_directions as $key => $val )
+            <option value="{{ $key }}" {{ (Input::old('order_by_direction') == $key) ? 'selected' : '' }}>
+                {{ $val }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
 <div class="control-group {{ $errors->has('published') ? 'error' : '' }}">
     {{ Form::label('published', 'Published', array('class' => 'control-label')) }}
     <div class="controls">
