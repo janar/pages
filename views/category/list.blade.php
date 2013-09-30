@@ -43,8 +43,8 @@
                     <div class="span6 text-right published-date">
                         <small>Published: {{ date('jS M, Y', strtotime($page->created_at)) }}</small>
                     </div>
-                    <div class="span2 offset1">
-                        <a class="btn btn-small" href={{ url($full_slug) }}>
+                    <div class="span2 offset1 read-more">
+                        <a class="btn btn-small btn-read-more" href={{ url($full_slug) }}>
                             Read More
                         </a>
                     </div>
